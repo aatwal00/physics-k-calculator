@@ -30,16 +30,16 @@
 </div><p class="fine" id="unit-note">Optional unit scenario: the entered figures are interpreted in the selected units, then converted to g and cm for calculation. BD² is interpreted in the corresponding mass × length² units. Main answer above remains unchanged.</p>
 <div class="advanced-grid">
 <div class="subpanel"><h3>Beaker measurements (shared)</h3><div class="raw-grid">
-<div class="field"><label for="b">B <span class="unit">beaker mass, g</span></label><input id="b" type="number" step="10" placeholder="e.g. 150"></div>
-<div class="field"><label for="d">D <span class="unit">diameter, cm</span></label><input id="d" type="number" step="0.1" placeholder="e.g. 8.2"></div>
+<div class="field"><label for="b">B <span class="unit">beaker mass, <span id="b-unit">g</span></span></label><input id="b" type="number" step="10" placeholder="e.g. 150"></div>
+<div class="field"><label for="d">D <span class="unit">diameter, <span id="d-unit">cm</span></span></label><input id="d" type="number" step="0.1" placeholder="e.g. 8.2"></div>
 </div></div>
 <div class="subpanel"><h3>50 g trial (first k)</h3><div class="raw-grid">
-<div class="field"><label for="h50">h <span class="unit">thickness, cm</span></label><input id="h50" type="number" step="0.01"></div>
+<div class="field"><label for="h50">h <span class="unit">thickness, <span class="h-unit">cm</span></span></label><input id="h50" type="number" step="0.01"></div>
 <div class="field"><label for="time50">Total time <span class="unit">s</span></label><input id="time50" type="number" step="0.1"></div>
 <div class="field"><label for="n50">Oscillations counted <span class="unit">number</span></label><input id="n50" type="number" step="1"></div>
 </div></div>
 <div class="subpanel"><h3>100 g trial (second k)</h3><div class="raw-grid">
-<div class="field"><label for="h100">h <span class="unit">thickness, cm</span></label><input id="h100" type="number" step="0.01"></div>
+<div class="field"><label for="h100">h <span class="unit">thickness, <span class="h-unit">cm</span></span></label><input id="h100" type="number" step="0.01"></div>
 <div class="field"><label for="time100">Total time <span class="unit">s</span></label><input id="time100" type="number" step="0.1"></div>
 <div class="field"><label for="n100">Oscillations counted <span class="unit">number</span></label><input id="n100" type="number" step="1"></div>
 </div></div>
@@ -61,6 +61,7 @@ const valid=x=>Number.isFinite(x)&&x>0;
 const text=(id,value)=>{$(id).textContent=value};
 const fmt=x=>Number.isFinite(x)?Number(x.toPrecision(12)).toString():'—';
 const calc=(bd,e,t,m)=>t*t*m*e/(bd+m*e*e);
+function updateUnitLabels(){text('b-unit',advancedMassUnit);text('d-unit',advancedLengthUnit);document.querySelectorAll('.h-unit').forEach(el=>el.textContent=advancedLengthUnit);}
 function getBD(){const v=num($('bd').value);return Number.isFinite(v)?v*(standardForm?10**Number($('exponent').value):1):NaN}
 function update(){
 const bdText=$('bd').value,eText=$('e').value,tText=$('t').value;
@@ -102,10 +103,10 @@ for(const m of [100,50]){
 }
 ['bd','e','t','b','d','h50','h100','time50','time100','n50','n100'].forEach(id=>$(id).addEventListener('input',()=>{if(id==='e'||id==='t')saved[mass][id]=$(id).value;update()}));
 $('exponent').addEventListener('change',update);
-$('bd-toggle').addEventListener('click',()=>{const current=getBD();standardForm=!standardForm;$('power-label').hidden=!standardForm;$('exponent').hidden=!standardForm;$('bd-toggle').textContent=standardForm?'Use ordinary number instead':'Use standard form instead';$('bd').placeholder=standardForm?'1.4':'14000';if(Number.isFinite(current))$('bd').value=standardForm?fmt(current/10**Number($('exponent').value)):fmt(current);update()});
+$('bd-toggle').addEventListener('click',()=>{const current=getBD();standardForm=!standardForm;$('power-label').hidden=!standardForm;$('exponent').hidden=!standardForm;$('bd-toggle').textContent=standardForm?'Use ordinary number instead':'Use standard form instead';$('bd').placeholder=standardForm?'1.4':'14000';$('bd').step=standardForm?'0.1':'100';if(Number.isFinite(current))$('bd').value=standardForm?fmt(current/10**Number($('exponent').value)):fmt(current);update()});
 document.querySelectorAll('[data-mass]').forEach(b=>b.addEventListener('click',()=>switchMass(Number(b.dataset.mass))));
-document.querySelectorAll('[data-unit-type]').forEach(button=>button.addEventListener('click',()=>{const type=button.dataset.unitType;if(type==='mass')advancedMassUnit=button.dataset.unit;else advancedLengthUnit=button.dataset.unit;document.querySelectorAll('[data-unit-type="'+type+'"]').forEach(b=>b.classList.toggle('selected',b===button));updateAdvanced()}));
-update();
+document.querySelectorAll('[data-unit-type]').forEach(button=>button.addEventListener('click',()=>{const type=button.dataset.unitType;if(type==='mass')advancedMassUnit=button.dataset.unit;else advancedLengthUnit=button.dataset.unit;document.querySelectorAll('[data-unit-type="'+type+'"]').forEach(b=>b.classList.toggle('selected',b===button));updateUnitLabels();updateAdvanced()}));
+updateUnitLabels();update();
 })();
 </script>
 </body></html>
