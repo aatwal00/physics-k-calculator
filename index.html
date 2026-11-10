@@ -1,47 +1,425 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en-GB">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>9702 Physics — k Calculator</title>
+
 <style>
-:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#e9edf5;background:#0d1320;font-size:16px}*{box-sizing:border-box}body{margin:0;padding:28px 14px}.app{max-width:660px;margin:auto}.head{margin-bottom:20px}h1{font-size:1.55rem;margin:0 0 6px}p{color:#aab6ca;margin:0;line-height:1.5}.panel{background:#182235;border:1px solid #34445c;border-radius:16px;padding:20px;margin:14px 0}.mode{display:flex;gap:10px;margin-bottom:18px}.mode button{flex:1}.btn{border:1px solid #435471;background:#24324b;color:#f2f5fa;border-radius:9px;min-height:45px;font:inherit;cursor:pointer}.btn:hover{background:#334767}.btn.selected{background:#335da3;border-color:#76a5f9}.fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.field label{display:block;font-weight:650;margin-bottom:6px}.unit{display:block;font-size:.75rem;color:#aab6ca;font-weight:400;margin-top:3px}.field input{width:100%;min-width:0;padding:12px 9px;border-radius:9px;border:1px solid #4a5971;background:#101827;color:white;font:inherit;font-variant-numeric:tabular-nums}.field input:focus{outline:2px solid #76a5f9;outline-offset:1px}.formula{color:#b9c9e1;font-size:.93rem;margin-top:16px}.result{background:#101c30;border:1px solid #35517b;border-radius:12px;padding:17px}.result .big{font-size:2.15rem;font-weight:750;letter-spacing:-.03em;overflow-wrap:anywhere;margin:6px 0}.small{font-size:.84rem;color:#afbdd0}.status{min-height:1.3em;color:#ffc67a;margin-top:8px;font-size:.88rem}.calc-top{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:12px}.calc-top h2{font-size:1.12rem;margin:0}.screen{width:100%;font-size:1.45rem;padding:14px;border:1px solid #465a76;border-radius:10px;background:#0d1524;color:#fff;text-align:right;min-height:60px;overflow-wrap:anywhere;margin-bottom:12px}.keys{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.key{min-height:53px;font-size:1.13rem;font-weight:550}.op{background:#30435f}.action{background:#435577}.equal{background:#2b67b6;border-color:#4b8ce5}.wide{grid-column:span 2}.help{font-size:.85rem;margin-top:13px}.footer{text-align:center;font-size:.78rem;margin:18px 0;color:#8493ab}@media(max-width:420px){.panel{padding:14px}.fields{gap:7px}.field input{font-size:.95rem;padding:11px 7px}.mode{gap:6px}.mode button{font-size:.87rem}}
+:root {
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: #e9edf5;
+  background: #0d1320;
+  font-size: 16px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 28px 14px;
+}
+
+.app {
+  max-width: 700px;
+  margin: auto;
+}
+
+h1 {
+  font-size: 1.55rem;
+  margin: 0 0 8px;
+}
+
+h2 {
+  font-size: 1.08rem;
+  margin: 0 0 16px;
+}
+
+p {
+  color: #aab6ca;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.head { margin-bottom: 20px; }
+
+.panel {
+  background: #182235;
+  border: 1px solid #34445c;
+  border-radius: 16px;
+  padding: 20px;
+  margin: 14px 0;
+}
+
+.mode {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.btn {
+  flex: 1;
+  min-height: 46px;
+  border: 1px solid #435471;
+  border-radius: 9px;
+  background: #24324b;
+  color: #f2f5fa;
+  font: inherit;
+  cursor: pointer;
+}
+
+.btn:hover { background: #334767; }
+
+.btn.selected {
+  background: #335da3;
+  border-color: #76a5f9;
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.field label {
+  display: block;
+  font-weight: 650;
+  margin-bottom: 6px;
+}
+
+.unit {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #aab6ca;
+  margin-top: 3px;
+}
+
+.field input {
+  width: 100%;
+  min-width: 0;
+  padding: 12px 9px;
+  border-radius: 9px;
+  border: 1px solid #4a5971;
+  background: #101827;
+  color: white;
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+}
+
+.field input:focus {
+  outline: 2px solid #76a5f9;
+  outline-offset: 1px;
+}
+
+.eq-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 1.2rem;
+  margin: 18px 0;
+  overflow-wrap: anywhere;
+}
+
+.fraction {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+  line-height: 1.5;
+}
+
+.numerator, .denominator {
+  padding: 5px 10px;
+  text-align: center;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.numerator {
+  border-bottom: 2px solid #e9edf5;
+}
+
+.live {
+  color: #8dbaff;
+  font-variant-numeric: tabular-nums;
+}
+
+.eq-note {
+  font-size: 0.85rem;
+  text-align: center;
+  color: #aab6ca;
+}
+
+.result {
+  background: #101c30;
+  border: 1px solid #35517b;
+  border-radius: 12px;
+  padding: 17px;
+}
+
+.big {
+  font-size: 2.15rem;
+  font-weight: 750;
+  letter-spacing: -0.03em;
+  overflow-wrap: anywhere;
+  margin: 6px 0;
+}
+
+.small {
+  font-size: 0.84rem;
+  color: #afbdd0;
+}
+
+.status {
+  min-height: 1.3em;
+  color: #ffc67a;
+  margin-top: 8px;
+  font-size: 0.88rem;
+}
+
+.footer {
+  text-align: center;
+  font-size: 0.78rem;
+  margin: 18px 0;
+  color: #8493ab;
+}
+
+@media (max-width: 420px) {
+  .panel { padding: 14px; }
+  .fields { gap: 7px; }
+  .field input {
+    font-size: 0.95rem;
+    padding: 11px 7px;
+  }
+  .mode { gap: 6px; }
+  .mode button { font-size: 0.87rem; }
+  .eq-line {
+    font-size: 1.03rem;
+    gap: 6px;
+  }
+}
 </style>
 </head>
-<body><main class="app">
-<div class="head"><h1>Physics practical — k calculator</h1><p>Cambridge International 9702/36 &amp; /38 · Question 2(e)</p></div>
+
+<body>
+<main class="app">
+
+<header class="head">
+  <h1>9702 Physics — k Calculator</h1>
+  <p>
+    Enter the candidate's answer-line values.
+    The equation and reference value of k update automatically.
+  </p>
+</header>
+
 <section class="panel">
-<div class="mode" aria-label="Choose experiment"><button class="btn" data-mass="50">First k · M = 50 g</button><button class="btn selected" data-mass="100">Second k · M = 100 g</button></div>
-<div class="fields">
-<div class="field"><label for="bd">BD²<span class="unit">g cm²</span></label><input id="bd" type="text" inputmode="decimal" placeholder="BD²" autocomplete="off"></div>
-<div class="field"><label for="e">E<span class="unit">cm</span></label><input id="e" type="text" inputmode="decimal" placeholder="E" autocomplete="off"></div>
-<div class="field"><label for="t">T<span class="unit">s</span></label><input id="t" type="text" inputmode="decimal" placeholder="T" autocomplete="off"></div>
-</div>
-<div class="formula">k = T²ME / (BD² + ME²) &nbsp;·&nbsp; using answer-line values</div>
+  <h2>Candidate values</h2>
+
+  <div class="mode">
+    <button type="button" class="btn"
+            data-mass="50">
+      First k · M = 50 g
+    </button>
+
+    <button type="button" class="btn selected"
+            data-mass="100">
+      Second k · M = 100 g
+    </button>
+  </div>
+
+  <div class="fields">
+    <div class="field">
+      <label for="bd">
+        BD<sup>2</sup>
+        <span class="unit">g cm<sup>2</sup></span>
+      </label>
+      <input id="bd" type="number" step="any"
+             placeholder="BD²">
+    </div>
+
+    <div class="field">
+      <label for="e">
+        E
+        <span class="unit">cm</span>
+      </label>
+      <input id="e" type="number" step="any"
+             placeholder="E">
+    </div>
+
+    <div class="field">
+      <label for="t">
+        T
+        <span class="unit">s</span>
+      </label>
+      <input id="t" type="number" step="any"
+             placeholder="T">
+    </div>
+  </div>
 </section>
-<section class="panel"><div class="result" aria-live="polite"><div class="small">Reference k · 2 significant figures</div><div id="result" class="big">—</div><div id="unrounded" class="small">Enter BD², E and T above.</div><div id="status" class="status"></div></div></section>
-<section class="panel"><div class="calc-top"><h2>Calculator keypad</h2><span id="target" class="small">Send result to: BD²</span></div><div id="screen" class="screen" role="status" aria-label="Calculator expression">0</div>
-<div class="keys">
-<button class="btn key action" data-key="AC">AC</button><button class="btn key action" data-key="DEL">⌫</button><button class="btn key op" data-key="(">(</button><button class="btn key op" data-key=")">)</button>
-<button class="btn key" data-key="7">7</button><button class="btn key" data-key="8">8</button><button class="btn key" data-key="9">9</button><button class="btn key op" data-key="/">÷</button>
-<button class="btn key" data-key="4">4</button><button class="btn key" data-key="5">5</button><button class="btn key" data-key="6">6</button><button class="btn key op" data-key="*">×</button>
-<button class="btn key" data-key="1">1</button><button class="btn key" data-key="2">2</button><button class="btn key" data-key="3">3</button><button class="btn key op" data-key="-">−</button>
-<button class="btn key" data-key="0">0</button><button class="btn key" data-key=".">.</button><button class="btn key op" data-key="^2">x²</button><button class="btn key op" data-key="+">+</button>
-<button class="btn key equal wide" data-key="=">= Calculate</button><button class="btn key equal wide" id="use">Use for BD²</button>
-</div><p class="help">Click an input to select it, use the keypad, then press “Use for…” to transfer the result. You can also type directly into the input fields. Scientific notation (e.g. 1.2e3) is supported in the inputs.</p><div id="calc-error" class="status" aria-live="polite"></div></section>
-<div class="footer">Reference calculation only. Check candidate working and apply the current standardisation mark scheme.</div>
+
+<section class="panel">
+  <h2>Rearranged equation</h2>
+
+  <div class="eq-line">
+    <span>k =</span>
+    <span class="fraction">
+      <span class="numerator">
+        T<sup>2</sup> × M × E
+      </span>
+      <span class="denominator">
+        BD<sup>2</sup> + M × E<sup>2</sup>
+      </span>
+    </span>
+  </div>
+
+  <div class="eq-note">
+    Live substitution using the values entered above
+  </div>
+
+  <div class="eq-line" aria-live="polite">
+    <span>k =</span>
+
+    <span class="fraction">
+      <span class="numerator">
+        (<span id="t-num" class="live">T</span>)<sup>2</sup>
+        × <span id="m-num" class="live">100</span>
+        × (<span id="e-num" class="live">E</span>)
+      </span>
+
+      <span class="denominator">
+        (<span id="bd-den" class="live">BD²</span>)
+        + <span id="m-den" class="live">100</span>
+        × (<span id="e-den" class="live">E</span>)<sup>2</sup>
+      </span>
+    </span>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="result" aria-live="polite">
+    <div class="small">
+      Reference k · 2 significant figures
+    </div>
+
+    <div id="result" class="big">—</div>
+
+    <div id="unrounded" class="small">
+      Enter BD², E and T above.
+    </div>
+
+    <div id="status" class="status"></div>
+  </div>
+</section>
+
+<div class="footer">
+  Cambridge International AS & A Level Physics 9702
+</div>
+
 </main>
+
 <script>
-(()=>{'use strict';let mass=100,active='bd',expression='';const ids=['bd','e','t'];const inputs=Object.fromEntries(ids.map(id=>[id,document.getElementById(id)]));const result=document.getElementById('result'),unrounded=document.getElementById('unrounded'),status=document.getElementById('status'),screen=document.getElementById('screen'),target=document.getElementById('target'),use=document.getElementById('use'),err=document.getElementById('calc-error');const names={bd:'BD²',e:'E',t:'T'};
-function number(s){if(!s.trim())return NaN;return Number(s)}
-function update(){const q=number(inputs.bd.value),e=number(inputs.e.value),t=number(inputs.t.value);if(![q,e,t].every(Number.isFinite)){result.textContent='—';unrounded.textContent='Enter BD², E and T above.';status.textContent='';return}if(q<0||e<=0||t<=0){result.textContent='—';unrounded.textContent='';status.textContent='BD² must be non-negative; E and T must be positive.';return}const k=t*t*mass*e/(q+mass*e*e);if(!Number.isFinite(k)||k<=0){result.textContent='—';unrounded.textContent='';status.textContent='Result outside numerical range.';return}result.textContent=k.toPrecision(2);unrounded.textContent='Unrounded: '+k.toPrecision(12);status.textContent=''}
-function setActive(id){active=id;target.textContent='Send result to: '+names[id];use.textContent='Use for '+names[id];expression=inputs[id].value;draw()}
-function draw(){screen.textContent=expression.replace(/\*/g,'×').replace(/\//g,'÷')||'0'}
-// Small recursive-descent arithmetic parser: no eval or dynamic code execution.
-function arithmetic(source){const s=source.replace(/\s/g,'');if(!s)throw Error('Empty expression');let i=0;function primary(){if(s[i]==='+'){i++;return primary()}if(s[i]==='-'){i++;return -primary()}if(s[i]==='('){i++;const n=sum();if(s[i]!==')')throw Error('Missing closing bracket');i++;return n}const m=/^(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?/.exec(s.slice(i));if(!m)throw Error('Invalid number');i+=m[0].length;return Number(m[0])}function power(){let n=primary();if(s[i]==='^'){i++;n=Math.pow(n,power())}return n}function product(){let n=power();while(s[i]==='*'||s[i]==='/'){const op=s[i++],v=power();n=op==='*'?n*v:n/v}return n}function sum(){let n=product();while(s[i]==='+'||s[i]==='-'){const op=s[i++],v=product();n=op==='+'?n+v:n-v}return n}const n=sum();if(i!==s.length||!Number.isFinite(n))throw Error('Invalid expression');return n}
-function calculate(){try{const n=arithmetic(expression);expression=String(Number(n.toPrecision(12)));err.textContent='';draw();return n}catch(e){err.textContent='Invalid calculation. Check the expression.';return null}}
-for(const id of ids){inputs[id].addEventListener('focus',()=>setActive(id));inputs[id].addEventListener('input',()=>{active=id;target.textContent='Send result to: '+names[id];use.textContent='Use for '+names[id];expression=inputs[id].value;draw();update()})}
-for(const button of document.querySelectorAll('[data-mass]'))button.addEventListener('click',()=>{mass=Number(button.dataset.mass);document.querySelectorAll('[data-mass]').forEach(b=>b.classList.toggle('selected',b===button));update()});
-for(const button of document.querySelectorAll('[data-key]'))button.addEventListener('click',()=>{const key=button.dataset.key;if(key==='AC')expression='';else if(key==='DEL')expression=expression.slice(0,-1);else if(key==='='){calculate();return}else expression+=key;err.textContent='';draw()});
-use.addEventListener('click',()=>{const n=calculate();if(n===null)return;inputs[active].value=expression;update()});update();draw();
+(() => {
+  "use strict";
+
+  let mass = 100;
+
+  const inputs = {
+    bd: document.getElementById("bd"),
+    e: document.getElementById("e"),
+    t: document.getElementById("t")
+  };
+
+  const result = document.getElementById("result");
+  const unrounded = document.getElementById("unrounded");
+  const status = document.getElementById("status");
+
+  function setText(id, value) {
+    document.getElementById(id).textContent = value;
+  }
+
+  function getNumber(input) {
+    if (input.value.trim() === "") return NaN;
+    return Number(input.value);
+  }
+
+  function update() {
+    const bdText = inputs.bd.value;
+    const eText = inputs.e.value;
+    const tText = inputs.t.value;
+
+    // Update the displayed substitution.
+    setText("bd-den", bdText || "BD²");
+    setText("e-num", eText || "E");
+    setText("e-den", eText || "E");
+    setText("t-num", tText || "T");
+    setText("m-num", String(mass));
+    setText("m-den", String(mass));
+
+    const bd = getNumber(inputs.bd);
+    const e = getNumber(inputs.e);
+    const t = getNumber(inputs.t);
+
+    if (![bd, e, t].every(Number.isFinite)) {
+      result.textContent = "—";
+      unrounded.textContent =
+        "Enter BD², E and T above.";
+      status.textContent = "";
+      return;
+    }
+
+    if (bd < 0 || e <= 0 || t <= 0) {
+      result.textContent = "—";
+      unrounded.textContent = "";
+      status.textContent =
+        "BD² must be non-negative; E and T must be positive.";
+      return;
+    }
+
+    // k = (T² × M × E) / (BD² + M × E²)
+    const numerator = t * t * mass * e;
+    const denominator = bd + mass * e * e;
+    const k = numerator / denominator;
+
+    if (!Number.isFinite(k) || k <= 0) {
+      result.textContent = "—";
+      unrounded.textContent = "";
+      status.textContent = "Invalid calculation.";
+      return;
+    }
+
+    result.textContent = k.toPrecision(2);
+    unrounded.textContent =
+      "Unrounded: " + k.toPrecision(12);
+    status.textContent = "";
+  }
+
+  Object.values(inputs).forEach(input => {
+    input.addEventListener("input", update);
+  });
+
+  document.querySelectorAll("[data-mass]")
+    .forEach(button => {
+      button.addEventListener("click", () => {
+        mass = Number(button.dataset.mass);
+
+        document.querySelectorAll("[data-mass]")
+          .forEach(b => {
+            b.classList.toggle(
+              "selected",
+              b === button
+            );
+          });
+
+        update();
+      });
+    });
+
+  update();
 })();
-</script></body></html>
+</script>
+</body>
+</html>
