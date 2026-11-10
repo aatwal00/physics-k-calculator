@@ -1,509 +1,105 @@
-
 <!doctype html>
 <html lang="en-GB">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>9702 Physics — k Calculator</title>
 <style>
-:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#edf2fc;background:#0c1423}
-*{box-sizing:border-box}
-body{margin:0;padding:20px 14px}
-.app{max-width:1050px;margin:auto}
-h1{font-size:1.4rem;margin:0 0 5px}
-h2{font-size:1.05rem;margin:0 0 14px}
-p{color:#a9b9d0;margin:0 0 14px;line-height:1.4}
-.panel{background:#182438;border:1px solid #354660;border-radius:14px;padding:18px;margin-top:13px}
-.main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:14px}
-.modes{display:flex;gap:8px;margin-bottom:14px}
-button{cursor:pointer;font:inherit}
-.mode{flex:1;background:#273952;color:#e9f0ff;border:1px solid #4a6181;border-radius:9px;padding:10px 5px}
-.mode.selected{background:#315da2;border-color:#91b7fa}
-.fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
-.field label{display:block;font-weight:650;font-size:.92rem;margin-bottom:6px}
-.unit{display:block;font-size:.72rem;font-weight:400;color:#a9b9d0}
-input{width:100%;min-width:0;background:#0d1829;color:white;border:1px solid #52647e;border-radius:8px;padding:11px 8px;font:inherit}
-input:focus{outline:2px solid #8dbaff;outline-offset:1px}
-.equation{text-align:center;display:flex;justify-content:center;align-items:center;gap:9px;flex-wrap:wrap;margin:9px 0 13px;font-size:1.1rem}
-.fraction{display:inline-flex;flex-direction:column;align-items:center;max-width:100%;overflow-wrap:anywhere;line-height:1.5}
-.top,.bottom{padding:3px 8px;text-align:center}
-.top{border-bottom:2px solid #e9f1fc}
-.live{color:#9dc8ff}
-.answer{background:#0e1d32;border:1px solid #456999;border-radius:10px;padding:12px 14px;margin-top:14px}
-.answer strong{font-size:2rem;display:block;overflow-wrap:anywhere}
-.hint,.fine{font-size:.8rem;color:#afc0d7}
-.warning{font-size:.82rem;color:#ffd08c;min-height:1em}
-.advanced summary{cursor:pointer;font-weight:700;list-style-position:inside}
-.advanced[open] summary{margin-bottom:15px}
-.advanced-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-.subpanel{background:#101d30;border-radius:10px;padding:13px}
-.subpanel h3{font-size:.95rem;margin:0 0 10px}
-.raw-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.raw-grid .field label{font-size:.82rem}
-.raw-grid input{padding:9px}
-.options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}
-.option{padding:10px;background:#102036;border:1px solid #324a67;border-radius:9px}
-.option strong{display:block;margin:4px 0}
-.option small{color:#b0bfd3}
-.table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:.87rem}
-th,td{padding:9px;text-align:left;border-bottom:1px solid #344660;vertical-align:top}
-th{color:#afc5e1}
-td:nth-child(2){font-variant-numeric:tabular-nums;font-weight:650}
-.tag{font-size:.76rem;color:#adc1df}
-.footer{font-size:.78rem;color:#8e9eb7;text-align:center;margin:18px}
-.empty{color:#a9b9d0;font-size:.9rem}
-@media(max-width:760px){
-.main{grid-template-columns:1fr}
-.advanced-grid{grid-template-columns:1fr}
-.panel{padding:14px}
-.equation{font-size:1rem}
-.answer{margin-top:10px}
-}
-@media(max-width:380px){
-.fields{gap:5px}
-.field input{padding:9px 5px;font-size:.9rem}
-.mode{font-size:.83rem}
-}
+:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#edf2fc;background:#0c1423}*{box-sizing:border-box}body{margin:0;padding:20px 14px}.app{max-width:1050px;margin:auto}h1{font-size:1.4rem;margin:0 0 5px}h2{font-size:1.05rem;margin:0 0 14px}p{color:#a9b9d0;margin:0 0 14px;line-height:1.4}.panel{background:#182438;border:1px solid #354660;border-radius:14px;padding:18px;margin-top:13px}.main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:14px}.modes{display:flex;gap:8px;margin-bottom:14px}button{cursor:pointer;font:inherit}.mode{flex:1;background:#273952;color:#e9f0ff;border:1px solid #4a6181;border-radius:9px;padding:10px 5px}.mode.selected{background:#315da2;border-color:#91b7fa}.bd-entry{display:flex;align-items:center;gap:5px}.bd-entry input{flex:1}.bd-entry select{width:65px}.bd-entry .power{white-space:nowrap;font-size:.78rem}.bd-toggle{margin-top:6px;font-size:.75rem;background:transparent;color:#9dc8ff;border:0;padding:0;text-decoration:underline}select{background:#0d1829;color:white;border:1px solid #52647e;border-radius:8px;padding:10px 3px;font:inherit}.fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.field label{display:block;font-weight:650;font-size:.92rem;margin-bottom:6px}.unit{display:block;font-size:.72rem;font-weight:400;color:#a9b9d0}input{width:100%;min-width:0;background:#0d1829;color:white;border:1px solid #52647e;border-radius:8px;padding:11px 8px;font:inherit}input:focus{outline:2px solid #8dbaff;outline-offset:1px}.equation{text-align:center;display:flex;justify-content:center;align-items:center;gap:9px;flex-wrap:wrap;margin:9px 0 13px;font-size:1.1rem}.fraction{display:inline-flex;flex-direction:column;align-items:center;max-width:100%;overflow-wrap:anywhere;line-height:1.5}.top,.bottom{padding:3px 8px;text-align:center}.top{border-bottom:2px solid #e9f1fc}.live{color:#9dc8ff}.answer{background:#0e1d32;border:1px solid #456999;border-radius:10px;padding:12px 14px;margin-top:14px}.answer strong{font-size:2rem;display:block;overflow-wrap:anywhere}.hint,.fine{font-size:.8rem;color:#afc0d7}.warning{font-size:.82rem;color:#ffd08c;min-height:1em}.advanced summary{cursor:pointer;font-weight:700;list-style-position:inside}.advanced[open] summary{margin-bottom:15px}.advanced-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.subpanel{background:#101d30;border-radius:10px;padding:13px}.subpanel h3{font-size:.95rem;margin:0 0 10px}.raw-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.raw-grid .field label{font-size:.82rem}.raw-grid input{padding:9px}.options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}.option{padding:10px;background:#102036;border:1px solid #324a67;border-radius:9px}.option strong{display:block;margin:4px 0}.option small{color:#b0bfd3}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.87rem}th,td{padding:9px;text-align:left;border-bottom:1px solid #344660;vertical-align:top}th{color:#afc5e1}td:nth-child(2){font-variant-numeric:tabular-nums;font-weight:650}.tag{font-size:.76rem;color:#adc1df}.footer{font-size:.78rem;color:#8e9eb7;text-align:center;margin:18px}.empty{color:#a9b9d0;font-size:.9rem}@media(max-width:760px){.main{grid-template-columns:1fr}.advanced-grid{grid-template-columns:1fr}.panel{padding:14px}.equation{font-size:1rem}.answer{margin-top:10px}}@media(max-width:380px){.fields{gap:5px}.field input{padding:9px 5px;font-size:.9rem}.mode{font-size:.83rem}}
 </style>
 </head>
-<body>
-<main class="app">
-<header>
-<h1>9702 Physics — k Calculator</h1>
-<p>Enter candidate answer-line values. The reference answer updates immediately.</p>
-</header>
-
+<body><main class="app">
+<header><h1>9702 Physics — k Calculator</h1><p>Enter candidate answer-line values. The reference answer updates immediately.</p></header>
 <div class="main">
-<section class="panel">
-<h2>Candidate values</h2>
-<div class="modes">
-<button type="button" class="mode" data-mass="50">First k · 50 g</button>
-<button type="button" class="mode selected" data-mass="100">Second k · 100 g</button>
-</div>
+<section class="panel"><h2>Candidate values</h2>
+<div class="modes"><button type="button" class="mode" data-mass="50">First k · 50 g</button><button type="button" class="mode selected" data-mass="100">Second k · 100 g</button></div>
 <div class="fields">
-<div class="field">
-<label for="bd">BD<sup>2</sup><span class="unit">g cm<sup>2</sup></span></label>
-<input id="bd" type="number" step="any" placeholder="BD²">
+<div class="field"><label for="bd">BD<sup>2</sup><span class="unit">g cm<sup>2</sup></span></label><div class="bd-entry"><input id="bd" type="number" step="any" placeholder="1.4"><span class="power" id="power-label">× 10^</span><select id="exponent" aria-label="Power of ten"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4" selected>4</option><option value="5">5</option><option value="6">6</option><option value="-1">−1</option><option value="-2">−2</option></select></div><button type="button" id="bd-toggle" class="bd-toggle">Use ordinary number instead</button></div>
+<div class="field"><label for="e">E<span class="unit">cm</span></label><input id="e" type="number" step="any" placeholder="E"></div>
+<div class="field"><label for="t">T<span class="unit">s</span></label><input id="t" type="number" step="any" placeholder="T"></div>
+</div><p class="fine" style="margin:13px 0 0">BD² is shared by both trials; E and T are saved separately for 50 g and 100 g.</p></section>
+<section class="panel"><h2>Equation &amp; result</h2>
+<div class="equation"><span>k =</span><span class="fraction"><span class="top">T² × M × E</span><span class="bottom">BD² + M × E²</span></span></div>
+<div class="equation" aria-live="polite"><span>k =</span><span class="fraction"><span class="top">(<span class="live" id="show-t">T</span>)² × <span class="live" id="show-m1">100</span> × (<span class="live" id="show-e1">E</span>)</span><span class="bottom">(<span class="live" id="show-bd">BD²</span>) + <span class="live" id="show-m2">100</span> × (<span class="live" id="show-e2">E</span>)²</span></span></div>
+<div class="answer" aria-live="polite"><span class="hint">Reference k (2 significant figures)</span><strong id="answer">—</strong><span class="hint" id="precise">Enter all three values.</span><div class="warning" id="warning"></div></div></section>
 </div>
-<div class="field">
-<label for="e">E<span class="unit">cm</span></label>
-<input id="e" type="number" step="any" placeholder="E">
-</div>
-<div class="field">
-<label for="t">T<span class="unit">s</span></label>
-<input id="t" type="number" step="any" placeholder="T">
-</div>
-</div>
-<p class="fine" style="margin:13px 0 0">
-BD² is shared by both trials; E and T are saved separately for 50 g and 100 g.
-</p>
-</section>
-
-<section class="panel">
-<h2>Equation &amp; result</h2>
-<div class="equation">
-<span>k =</span>
-<span class="fraction">
-<span class="top">T² × M × E</span>
-<span class="bottom">BD² + M × E²</span>
-</span>
-</div>
-<div class="equation" aria-live="polite">
-<span>k =</span>
-<span class="fraction">
-<span class="top">
-(<span class="live" id="show-t">T</span>)² ×
-<span class="live" id="show-m1">100</span> ×
-(<span class="live" id="show-e1">E</span>)
-</span>
-<span class="bottom">
-(<span class="live" id="show-bd">BD²</span>) +
-<span class="live" id="show-m2">100</span> ×
-(<span class="live" id="show-e2">E</span>)²
-</span>
-</span>
-</div>
-<div class="answer" aria-live="polite">
-<span class="hint">Reference k (2 significant figures)</span>
-<strong id="answer">—</strong>
-<span class="hint" id="precise">Enter all three values.</span>
-<div class="warning" id="warning"></div>
-</div>
-</section>
-</div>
-
-<details class="panel advanced" id="advanced">
-<summary>Raw values &amp; alternative calculations (optional)</summary>
-<p class="fine">
-Enter only the raw measurements available. Each alternative is calculated in
-consistent g, cm and s units. Results are possibilities to check against
-candidate working, not automatic marking decisions.
-</p>
-
+<details class="panel advanced" id="advanced"><summary>Raw values &amp; alternative calculations (optional)</summary>
+<p class="fine">Enter only the raw measurements available. Each alternative is calculated in consistent g, cm and s units. Results are possibilities to check against candidate working, not automatic marking decisions.</p>
 <div class="advanced-grid">
-<div class="subpanel">
-<h3>Beaker measurements (shared)</h3>
-<div class="raw-grid">
-<div class="field">
-<label for="b">B <span class="unit">beaker mass, g</span></label>
-<input id="b" type="number" step="any" placeholder="e.g. 150">
+<div class="subpanel"><h3>Beaker measurements (shared)</h3><div class="raw-grid">
+<div class="field"><label for="b">B <span class="unit">beaker mass, g</span></label><input id="b" type="number" step="any" placeholder="e.g. 150"></div>
+<div class="field"><label for="d">D <span class="unit">diameter, cm</span></label><input id="d" type="number" step="any" placeholder="e.g. 8.2"></div>
+</div></div>
+<div class="subpanel"><h3>50 g trial (first k)</h3><div class="raw-grid">
+<div class="field"><label for="h50">h <span class="unit">thickness, cm</span></label><input id="h50" type="number" step="any"></div>
+<div class="field"><label for="time50">Total time <span class="unit">s</span></label><input id="time50" type="number" step="any"></div>
+<div class="field"><label for="n50">Oscillations counted <span class="unit">number</span></label><input id="n50" type="number" step="1"></div>
+</div></div>
+<div class="subpanel"><h3>100 g trial (second k)</h3><div class="raw-grid">
+<div class="field"><label for="h100">h <span class="unit">thickness, cm</span></label><input id="h100" type="number" step="any"></div>
+<div class="field"><label for="time100">Total time <span class="unit">s</span></label><input id="time100" type="number" step="any"></div>
+<div class="field"><label for="n100">Oscillations counted <span class="unit">number</span></label><input id="n100" type="number" step="1"></div>
+</div></div>
+<div class="subpanel"><h3>How alternatives are formed</h3><p class="fine">For each trial, use either answer-line or calculated BD² = B × D²; either answer-line E or D + h; and either answer-line T or total time ÷ oscillation count. Only complete, physically valid combinations appear.</p></div>
 </div>
-<div class="field">
-<label for="d">D <span class="unit">diameter, cm</span></label>
-<input id="d" type="number" step="any" placeholder="e.g. 8.2">
-</div>
-</div>
-</div>
-
-<div class="subpanel">
-<h3>50 g trial (first k)</h3>
-<div class="raw-grid">
-<div class="field">
-<label for="h50">h <span class="unit">thickness, cm</span></label>
-<input id="h50" type="number" step="any">
-</div>
-<div class="field">
-<label for="time50">Total time <span class="unit">s</span></label>
-<input id="time50" type="number" step="any">
-</div>
-<div class="field">
-<label for="n50">Oscillations counted <span class="unit">number</span></label>
-<input id="n50" type="number" step="1">
-</div>
-</div>
-</div>
-
-<div class="subpanel">
-<h3>100 g trial (second k)</h3>
-<div class="raw-grid">
-<div class="field">
-<label for="h100">h <span class="unit">thickness, cm</span></label>
-<input id="h100" type="number" step="any">
-</div>
-<div class="field">
-<label for="time100">Total time <span class="unit">s</span></label>
-<input id="time100" type="number" step="any">
-</div>
-<div class="field">
-<label for="n100">Oscillations counted <span class="unit">number</span></label>
-<input id="n100" type="number" step="1">
-</div>
-</div>
-</div>
-
-<div class="subpanel">
-<h3>How alternatives are formed</h3>
-<p class="fine">
-For the selected trial, use either answer-line or calculated
-BD² = B × D²; either answer-line E or D + h;
-and either answer-line T or total time ÷ oscillation count.
-Only complete, physically valid combinations appear.
-</p>
-</div>
-</div>
-
-<div class="options" id="derived"></div>
-
-<h2>Possible k values — <span id="trial-name">100 g trial</span></h2>
-<div class="table-wrap">
-<table>
-<thead>
-<tr>
-<th>Source combination</th>
-<th>k (2 s.f.)</th>
-<th>Unrounded</th>
-</tr>
-</thead>
-<tbody id="alternatives">
-<tr>
-<td colspan="3" class="empty">
-Enter candidate or raw values above.
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p class="fine" style="margin-top:12px">
-Exact duplicate combinations are grouped. A power-of-ten difference
-is flagged for review, not automatically treated as equivalent.
-Apply the standardisation instructions when awarding marks.
-</p>
+<div id="trial-results-100"><h2>Possible k values — 100 g trial</h2><div class="options" id="derived100"></div><div class="table-wrap"><table><thead><tr><th>Source combination</th><th>k (2 s.f.)</th><th>Unrounded</th></tr></thead><tbody id="alternatives100"></tbody></table></div></div>
+<div id="trial-results-50"><h2 style="margin-top:22px">Possible k values — 50 g trial</h2><div class="options" id="derived50"></div><div class="table-wrap"><table><thead><tr><th>Source combination</th><th>k (2 s.f.)</th><th>Unrounded</th></tr></thead><tbody id="alternatives50"></tbody></table></div></div>
+<p class="fine" style="margin-top:12px">Exact duplicate combinations are grouped. A power-of-ten difference is flagged for review, not automatically treated as equivalent. Apply the standardisation instructions when awarding marks.</p>
 </details>
-
-<div class="footer">
-Cambridge International AS &amp; A Level Physics 9702 · Examiner reference aid
-</div>
+<div class="footer">Cambridge International AS &amp; A Level Physics 9702 · Examiner reference aid</div>
 </main>
-
 <script>
-(() => {
-"use strict";
-
-const $ = id => document.getElementById(id);
-let mass = 100;
-
-const saved = {
-  50: {e:"", t:""},
-  100: {e:"", t:""}
-};
-
-const num = v =>
-  String(v).trim() === "" ? NaN : Number(v);
-
-const valid = x =>
-  Number.isFinite(x) && x > 0;
-
-const text = (id, value) => {
-  $(id).textContent = value;
-};
-
-const fmt = x =>
-  Number.isFinite(x)
-    ? Number(x.toPrecision(12)).toString()
-    : "—";
-
-const calc = (bd, e, t, m) =>
-  t*t*m*e/(bd+m*e*e);
-
-function update() {
-  const bdText = $("bd").value;
-  const eText = $("e").value;
-  const tText = $("t").value;
-
-  text("show-bd", bdText || "BD²");
-  text("show-e1", eText || "E");
-  text("show-e2", eText || "E");
-  text("show-t", tText || "T");
-  text("show-m1", mass);
-  text("show-m2", mass);
-
-  const bd = num(bdText);
-  const e = num(eText);
-  const t = num(tText);
-
-  if (
-    Number.isFinite(bd) &&
-    bd >= 0 &&
-    valid(e) &&
-    valid(t)
-  ) {
-    const k = calc(bd,e,t,mass);
-
-    if (valid(k)) {
-      text("answer", k.toPrecision(2));
-      text("precise", "Unrounded: " + k.toPrecision(12));
-      text("warning", "");
-    } else {
-      text("answer", "—");
-      text("precise", "");
-      text("warning", "Calculation outside numerical range.");
-    }
-  } else {
-    text("answer", "—");
-    text("precise", "Enter all three values.");
-    text(
-      "warning",
-      [bd,e,t].some(x => Number.isFinite(x) && x < 0)
-        ? "Measurements cannot be negative."
-        : ""
-    );
-  }
-
-  updateAdvanced();
+(()=>{'use strict';
+const $=id=>document.getElementById(id);
+let mass=100, standardForm=true;
+const saved={50:{e:'',t:''},100:{e:'',t:''}};
+const num=v=>String(v).trim()===''?NaN:Number(v);
+const valid=x=>Number.isFinite(x)&&x>0;
+const text=(id,value)=>{$(id).textContent=value};
+const fmt=x=>Number.isFinite(x)?Number(x.toPrecision(12)).toString():'—';
+const calc=(bd,e,t,m)=>t*t*m*e/(bd+m*e*e);
+function getBD(){const v=num($('bd').value);return Number.isFinite(v)?v*(standardForm?10**Number($('exponent').value):1):NaN}
+function update(){
+const bdText=$('bd').value,eText=$('e').value,tText=$('t').value;
+text('show-bd',bdText?(standardForm?fmt(num(bdText)*10**Number($('exponent').value)):bdText):'BD²');text('show-e1',eText||'E');text('show-e2',eText||'E');text('show-t',tText||'T');text('show-m1',mass);text('show-m2',mass);
+const bd=getBD(),e=num(eText),t=num(tText);
+if(Number.isFinite(bd)&&bd>=0&&valid(e)&&valid(t)){
+const k=calc(bd,e,t,mass);
+if(valid(k)){text('answer',k.toPrecision(2));text('precise','Unrounded: '+k.toPrecision(12));text('warning','')}
+else {text('answer','—');text('precise','');text('warning','Calculation outside numerical range.')}
+}else {text('answer','—');text('precise','Enter all three values.');text('warning',[bd,e,t].some(x=>Number.isFinite(x)&&x<0)?'Measurements cannot be negative.':'')}
+updateAdvanced();
 }
-
-function switchMass(next) {
-  saved[mass].e = $("e").value;
-  saved[mass].t = $("t").value;
-
-  mass = next;
-
-  $("e").value = saved[mass].e;
-  $("t").value = saved[mass].t;
-
-  document.querySelectorAll("[data-mass]")
-    .forEach(b => b.classList.toggle(
-      "selected",
-      Number(b.dataset.mass) === mass
-    ));
-
-  update();
+function switchMass(next){saved[mass].e=$('e').value;saved[mass].t=$('t').value;mass=next;$('e').value=saved[mass].e;$('t').value=saved[mass].t;document.querySelectorAll('[data-mass]').forEach(b=>b.classList.toggle('selected',Number(b.dataset.mass)===mass));update()}
+function updateAdvanced(){
+const B=num($('b').value),D=num($('d').value);
+const rawBD=valid(B)&&valid(D)?B*D*D:NaN,bd=getBD();
+for(const m of [100,50]){
+ const h=num($('h'+m).value),total=num($('time'+m).value),count=num($('n'+m).value);
+ const rawE=valid(D)&&Number.isFinite(h)&&h>=0?D+h:NaN;
+ const rawT=valid(total)&&valid(count)&&Number.isInteger(count)?total/count:NaN;
+ const e=num(saved[m].e),t=num(saved[m].t);
+ const groups=[
+ {label:'BD²',items:[['Answer line',bd],['B × D²',rawBD]]},
+ {label:'E',items:[['Answer line',e],['D + h',rawE]]},
+ {label:'T',items:[['Answer line',t],['Total time ÷ count',rawT]]}
+ ];
+ const derived=$('derived'+m);derived.replaceChildren();
+ for(const g of groups){const div=document.createElement('div');div.className='option';const title=document.createElement('strong');title.textContent=g.label;div.append(title);for(const [name,value] of g.items){const line=document.createElement('small');line.style.display='block';line.textContent=name+': '+(Number.isFinite(value)&&(value>0||g.label==='BD²'&&value===0)?fmt(value):'—');div.append(line)}derived.append(div)}
+ const possibilities=[];
+ for(const [bs,bv] of groups[0].items)for(const [es,ev] of groups[1].items)for(const [ts,tv] of groups[2].items){if(!Number.isFinite(bv)||bv<0||!valid(ev)||!valid(tv))continue;const k=calc(bv,ev,tv,m);if(valid(k))possibilities.push({source:`BD²: ${bs}; E: ${es}; T: ${ts}`,k})}
+ const unique=[];
+ for(const p of possibilities){const old=unique.find(u=>Math.abs(u.k-p.k)<=1e-11*Math.max(Math.abs(u.k),Math.abs(p.k)));if(old)old.sources.push(p.source);else unique.push({k:p.k,sources:[p.source]})}
+ unique.sort((a,b)=>a.k-b.k);
+ const tbody=$('alternatives'+m);tbody.replaceChildren();
+ if(!unique.length){const tr=document.createElement('tr'),td=document.createElement('td');td.colSpan=3;td.className='empty';td.textContent='Enter enough values to calculate at least one complete combination.';tr.append(td);tbody.append(tr);continue}
+ for(const item of unique){const tr=document.createElement('tr'),a=document.createElement('td'),b=document.createElement('td'),c=document.createElement('td');a.textContent=item.sources.join(' | ');b.textContent=item.k.toPrecision(2);c.textContent=item.k.toPrecision(12);tr.append(a,b,c);tbody.append(tr)}
 }
-
-function updateAdvanced() {
-  text("trial-name", mass + " g trial");
-
-  const B = num($("b").value);
-  const D = num($("d").value);
-  const h = num($("h" + mass).value);
-  const total = num($("time" + mass).value);
-  const count = num($("n" + mass).value);
-
-  const rawBD = valid(B) && valid(D)
-    ? B*D*D : NaN;
-
-  const rawE = valid(D) && Number.isFinite(h) && h >= 0
-    ? D+h : NaN;
-
-  const rawT = valid(total) && valid(count)
-    ? total/count : NaN;
-
-  const bd = num($("bd").value);
-  const e = num($("e").value);
-  const t = num($("t").value);
-
-  const groups = [
-    {
-      label:"BD²",
-      items:[
-        ["Answer line",bd],
-        ["B × D²",rawBD]
-      ]
-    },
-    {
-      label:"E",
-      items:[
-        ["Answer line",e],
-        ["D + h",rawE]
-      ]
-    },
-    {
-      label:"T",
-      items:[
-        ["Answer line",t],
-        ["Total time ÷ count",rawT]
-      ]
-    }
-  ];
-
-  $("derived").replaceChildren();
-
-  for (const g of groups) {
-    const div = document.createElement("div");
-    div.className = "option";
-
-    const title = document.createElement("strong");
-    title.textContent = g.label;
-    div.append(title);
-
-    for (const [name,value] of g.items) {
-      const line = document.createElement("small");
-      line.style.display = "block";
-
-      line.textContent =
-        name + ": " +
-        (
-          valid(value) ||
-          (g.label === "BD²" && value === 0)
-            ? fmt(value)
-            : "—"
-        );
-
-      div.append(line);
-    }
-
-    $("derived").append(div);
-  }
-
-  const possibilities = [];
-
-  for (const [bs,bv] of groups[0].items)
-  for (const [es,ev] of groups[1].items)
-  for (const [ts,tv] of groups[2].items) {
-    if (
-      !Number.isFinite(bv) ||
-      bv < 0 ||
-      !valid(ev) ||
-      !valid(tv)
-    ) continue;
-
-    const k = calc(bv,ev,tv,mass);
-
-    if (valid(k)) {
-      possibilities.push({
-        source:
-          `BD²: ${bs}; E: ${es}; T: ${ts}`,
-        k
-      });
-    }
-  }
-
-  const unique = [];
-
-  for (const p of possibilities) {
-    const old = unique.find(u =>
-      Math.abs(u.k-p.k) <=
-      1e-11*Math.max(Math.abs(u.k),Math.abs(p.k))
-    );
-
-    if (old) {
-      old.sources.push(p.source);
-    } else {
-      unique.push({
-        k:p.k,
-        sources:[p.source]
-      });
-    }
-  }
-
-  unique.sort((a,b) => a.k-b.k);
-
-  const tbody = $("alternatives");
-  tbody.replaceChildren();
-
-  if (!unique.length) {
-    const tr = document.createElement("tr");
-    const td = document.createElement("td");
-
-    td.colSpan = 3;
-    td.className = "empty";
-    td.textContent =
-      "Enter enough values to calculate at least one complete combination.";
-
-    tr.append(td);
-    tbody.append(tr);
-    return;
-  }
-
-  for (const item of unique) {
-    const tr = document.createElement("tr");
-    const a = document.createElement("td");
-    const b = document.createElement("td");
-    const c = document.createElement("td");
-
-    a.textContent = item.sources.join(" | ");
-    b.textContent = item.k.toPrecision(2);
-    c.textContent = item.k.toPrecision(12);
-
-    tr.append(a,b,c);
-    tbody.append(tr);
-  }
 }
-
-[
-  "bd","e","t","b","d",
-  "h50","h100",
-  "time50","time100",
-  "n50","n100"
-].forEach(id =>
-  $(id).addEventListener("input", () => {
-    if (id === "e" || id === "t") {
-      saved[mass][id] = $(id).value;
-    }
-    update();
-  })
-);
-
-document.querySelectorAll("[data-mass]")
-  .forEach(b =>
-    b.addEventListener("click", () =>
-      switchMass(Number(b.dataset.mass))
-    )
-  );
-
+['bd','e','t','b','d','h50','h100','time50','time100','n50','n100'].forEach(id=>$(id).addEventListener('input',()=>{if(id==='e'||id==='t')saved[mass][id]=$(id).value;update()}));
+$('exponent').addEventListener('change',update);
+$('bd-toggle').addEventListener('click',()=>{const current=getBD();standardForm=!standardForm;$('power-label').hidden=!standardForm;$('exponent').hidden=!standardForm;$('bd-toggle').textContent=standardForm?'Use ordinary number instead':'Use standard form instead';$('bd').placeholder=standardForm?'1.4':'14000';if(Number.isFinite(current))$('bd').value=standardForm?fmt(current/10**Number($('exponent').value)):fmt(current);update()});
+document.querySelectorAll('[data-mass]').forEach(b=>b.addEventListener('click',()=>switchMass(Number(b.dataset.mass))));
 update();
 })();
 </script>
-</body>
-</html>
+</body></html>
