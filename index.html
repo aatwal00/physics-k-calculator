@@ -4,110 +4,81 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>9702 Physics — k Calculator</title>
 <style>
-:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#edf2fc;background:#0c1423}*{box-sizing:border-box}body{margin:0;padding:20px 14px}.app{max-width:1050px;margin:auto}h1{font-size:1.4rem;margin:0 0 5px}h2{font-size:1.05rem;margin:0 0 14px}p{color:#a9b9d0;margin:0 0 14px;line-height:1.4}.panel{background:#182438;border:1px solid #354660;border-radius:14px;padding:18px;margin-top:13px}.main{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);gap:14px}.modes{display:flex;gap:8px;margin-bottom:14px}button{cursor:pointer;font:inherit}.mode{flex:1;background:#273952;color:#e9f0ff;border:1px solid #4a6181;border-radius:9px;padding:10px 5px}.mode.selected{background:#315da2;border-color:#91b7fa}.bd-entry{display:flex;align-items:center;gap:5px}.bd-entry input{flex:1 1 100px;min-width:0}.bd-entry.ordinary{max-width:170px}.bd-entry.ordinary input{width:100%;flex:1 1 auto}.bd-entry select{flex:0 0 68px;width:68px}.bd-entry .power{white-space:nowrap;font-size:.78rem}.clear-button{display:block;margin-top:13px;background:#273952;color:#e9f0ff;border:1px solid #52647e;border-radius:8px;padding:8px 12px;font-size:.86rem}.clear-button:hover{background:#334a68}.bd-toggle{margin-top:6px;font-size:.75rem;background:transparent;color:#9dc8ff;border:0;padding:0;text-decoration:underline}select{background:#0d1829;color:white;border:1px solid #52647e;border-radius:8px;padding:10px 3px;font:inherit}.fields{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(0,1fr) minmax(0,1fr);gap:9px}.field label{display:block;font-weight:650;font-size:.92rem;margin-bottom:6px}.unit{display:block;font-size:.72rem;font-weight:400;color:#a9b9d0}input{width:100%;min-width:0;background:#0d1829;color:white;border:1px solid #52647e;border-radius:8px;padding:13px 10px;font-size:1.1rem}input:focus{outline:2px solid #8dbaff;outline-offset:1px}.equation{text-align:center;display:flex;justify-content:center;align-items:center;gap:9px;flex-wrap:wrap;margin:9px 0 13px;font-size:1.1rem}.fraction{display:inline-flex;flex-direction:column;align-items:center;max-width:100%;overflow-wrap:anywhere;line-height:1.5}.top,.bottom{padding:3px 8px;text-align:center}.top{border-bottom:2px solid #e9f1fc}.live{color:#9dc8ff}.answer{background:#0e1d32;border:1px solid #456999;border-radius:10px;padding:12px 14px;margin-top:14px}.answer strong{font-size:2rem;display:block;overflow-wrap:anywhere}.hint,.fine{font-size:.8rem;color:#afc0d7}.warning{font-size:.82rem;color:#ffd08c;min-height:1em}.unit-controls{display:flex;flex-wrap:wrap;gap:12px;margin:12px 0 16px}.unit-control{flex:1 1 220px;background:#101d30;padding:12px;border-radius:10px}.unit-control strong{display:block;margin-bottom:9px}.unit-buttons{display:flex;gap:5px}.unit-button{flex:1;min-width:0;padding:9px 5px;background:#273952;color:#edf2fc;border:1px solid #52647e;border-radius:7px}.unit-button.selected{background:#315da2;border-color:#91b7fa}.advanced summary{cursor:pointer;font-weight:700;list-style-position:inside}.advanced[open] summary{margin-bottom:15px}.advanced-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.subpanel{background:#101d30;border-radius:10px;padding:13px}.subpanel h3{font-size:.95rem;margin:0 0 10px}.raw-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.raw-grid .field label{font-size:.82rem}.raw-grid input{padding:12px 10px;font-size:1.05rem}.options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}.option{padding:10px;background:#102036;border:1px solid #324a67;border-radius:9px}.option strong{display:block;margin:4px 0}.option small{color:#b0bfd3}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.95rem}th,td{padding:9px;text-align:left;border-bottom:1px solid #344660;vertical-align:top}th{color:#afc5e1}td:nth-child(2){font-variant-numeric:tabular-nums;font-weight:750;font-size:1.25rem;color:#a9d1ff}td:nth-child(3){font-variant-numeric:tabular-nums;font-size:1.02rem}.tag{font-size:.76rem;color:#adc1df}.footer{font-size:.78rem;color:#8e9eb7;text-align:center;margin:18px}.empty{color:#a9b9d0;font-size:.9rem}@media(max-width:760px){.main{grid-template-columns:1fr}.advanced-grid{grid-template-columns:1fr}.panel{padding:14px}.equation{font-size:1rem}.answer{margin-top:10px}}@media(min-width:761px) and (max-width:1000px){.fields{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr)}.fields>.field:first-child{grid-column:1/-1}}@media(max-width:600px){.fields{grid-template-columns:1fr 1fr}.fields>.field:first-child{grid-column:1/-1}.bd-entry input{min-width:0}.mode{font-size:.9rem}}
+:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#edf2fc;background:#0c1423}*{box-sizing:border-box}body{margin:0;padding:20px 14px}.app{max-width:1050px;margin:auto}h1{font-size:1.4rem;margin:0 0 5px}h2{font-size:1.05rem;margin:0 0 14px}p{color:#a9b9d0;margin:0 0 14px;line-height:1.4}.panel{background:#182438;border:1px solid #354660;border-radius:14px;padding:18px;margin-top:13px}.main{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);gap:14px}.modes{display:flex;gap:8px;margin-bottom:14px}button{cursor:pointer;font:inherit}.mode{flex:1;background:#273952;color:#e9f0ff;border:1px solid #4a6181;border-radius:9px;padding:10px 5px}.mode.selected{background:#315da2;border-color:#91b7fa}.bd-entry{display:flex;align-items:center;gap:5px}.bd-entry input{flex:1 1 100px;min-width:0}.bd-entry.ordinary{max-width:170px}.bd-entry.ordinary input{width:100%;flex:1 1 auto}.bd-entry select{flex:0 0 68px;width:68px}.bd-entry .power{white-space:nowrap;font-size:.78rem}.clear-button{display:block;margin-top:13px;background:#922d3a;color:#fff;border:1px solid #d16a76;border-radius:8px;padding:8px 12px;font-size:.86rem}.clear-button:hover{background:#b43a49}.bd-toggle{margin-top:6px;font-size:.75rem;background:transparent;color:#9dc8ff;border:0;padding:0;text-decoration:underline}select{background:#0d1829;color:white;border:1px solid #52647e;border-radius:8px;padding:10px 3px;font:inherit}.fields{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(0,1fr) minmax(0,1fr);gap:9px}.field label{display:block;font-weight:650;font-size:.92rem;margin-bottom:6px}.unit{display:block;font-size:.72rem;font-weight:400;color:#a9b9d0}input{width:100%;min-width:0;background:#0d1829;color:white;border:1px solid #52647e;border-radius:8px;padding:13px 10px;font-size:1.1rem}input:focus{outline:2px solid #8dbaff;outline-offset:1px}.equation{text-align:center;display:flex;justify-content:center;align-items:center;gap:9px;flex-wrap:wrap;margin:9px 0 13px;font-size:1.1rem}.fraction{display:inline-flex;flex-direction:column;align-items:center;max-width:100%;overflow-wrap:anywhere;line-height:1.5}.top,.bottom{padding:3px 8px;text-align:center}.top{border-bottom:2px solid #e9f1fc}.live{color:#9dc8ff}.answer{background:#0e1d32;border:1px solid #456999;border-radius:10px;padding:12px 14px;margin-top:14px}.answer strong{font-size:2rem;display:block;overflow-wrap:anywhere}.hint,.fine{font-size:.8rem;color:#afc0d7}.warning{font-size:.82rem;color:#ffd08c;min-height:1em}.unit-controls{display:flex;flex-wrap:wrap;gap:12px;margin:12px 0 16px}.unit-control{flex:1 1 220px;background:#101d30;padding:12px;border-radius:10px}.unit-control strong{display:block;margin-bottom:9px}.unit-buttons{display:flex;gap:5px}.unit-button{flex:1;min-width:0;padding:9px 5px;background:#273952;color:#edf2fc;border:1px solid #52647e;border-radius:7px}.unit-button.selected{background:#315da2;border-color:#91b7fa}.advanced summary{cursor:pointer;font-weight:700;list-style-position:inside}.advanced[open] summary{margin-bottom:15px}.advanced-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.subpanel{background:#101d30;border-radius:10px;padding:13px}.subpanel h3{font-size:.95rem;margin:0 0 10px}.raw-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.raw-grid .field label{font-size:.82rem}.raw-grid input{padding:12px 10px;font-size:1.05rem}.options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}.option{padding:10px;background:#102036;border:1px solid #324a67;border-radius:9px}.option strong{display:block;margin:4px 0}.option small{color:#b0bfd3}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.95rem}th,td{padding:9px;text-align:left;border-bottom:1px solid #344660;vertical-align:top}th{color:#afc5e1}td:nth-child(2){font-variant-numeric:tabular-nums;font-weight:750;font-size:1.25rem;color:#a9d1ff}td:nth-child(3){font-variant-numeric:tabular-nums;font-size:1.02rem}.tag{font-size:.76rem;color:#adc1df}.footer{font-size:.78rem;color:#8e9eb7;text-align:center;margin:18px}.empty{color:#a9b9d0;font-size:.9rem}@media(max-width:760px){.main{grid-template-columns:1fr}.advanced-grid{grid-template-columns:1fr}.panel{padding:14px}.equation{font-size:1rem}.answer{margin-top:10px}}@media(min-width:761px) and (max-width:1000px){.fields{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr)}.fields>.field:first-child{grid-column:1/-1}}@media(max-width:600px){.fields{grid-template-columns:1fr 1fr}.fields>.field:first-child{grid-column:1/-1}.bd-entry input{min-width:0}.mode{font-size:.9rem}}
+.raw-separator{text-align:center;color:#9dc8ff;font-weight:650;padding:16px 0 2px}.raw-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.raw-fields .field label{font-size:.9rem}@media(max-width:600px){.raw-fields{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body><main class="app">
-<header><h1>9702 Physics — k Calculator</h1><p>Enter candidate answer-line values. The reference answer updates immediately.</p></header>
+<header><h1>9702 Physics — k Calculator</h1><p>Check the candidate’s recorded answer-line values first. If necessary, compare with a calculation from their raw measurements.</p></header>
+<div class="modes" style="max-width:500px;margin:15px 0 0"><button type="button" class="mode" data-mass="50">First k · 50 g</button><button type="button" class="mode selected" data-mass="100">Second k · 100 g</button></div>
 <div class="main">
-<section class="panel"><h2>Candidate values</h2>
-<div class="modes"><button type="button" class="mode" data-mass="50">First k · 50 g</button><button type="button" class="mode selected" data-mass="100">Second k · 100 g</button></div>
+<section class="panel"><h2>1. Candidate answer-line values</h2>
 <div class="fields">
 <div class="field"><label for="bd">BD<sup>2</sup><span class="unit">g cm<sup>2</sup></span></label><div class="bd-entry" id="bd-entry"><input id="bd" type="number" step="0.1" placeholder="1.4"><span class="power" id="power-label">× 10^</span><select id="exponent" tabindex="-1" aria-label="Power of ten"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4" selected>4</option><option value="5">5</option><option value="6">6</option><option value="-1">−1</option><option value="-2">−2</option></select></div><button type="button" id="bd-toggle" tabindex="-1" class="bd-toggle">Use ordinary number instead</button></div>
 <div class="field"><label for="e">E<span class="unit">cm</span></label><input id="e" type="number" step="0.1" placeholder="E"></div>
 <div class="field"><label for="t">T<span class="unit">s</span></label><input id="t" type="number" step="0.01" placeholder="T"></div>
-</div><button type="button" class="clear-button" id="clear-values">Clear candidate values</button><p class="fine" style="margin:13px 0 0">BD² is shared by both trials; E and T are saved separately for 50 g and 100 g.</p></section>
-<section class="panel"><h2>Equation &amp; result</h2>
+</div><button type="button" class="clear-button" id="clear-values">Clear answer-line values</button><p class="fine" style="margin:13px 0 0">BD² is shared by both trials. E and T are saved separately for each trial.</p></section>
+<section class="panel"><h2>Answer-line equation &amp; result</h2>
 <div class="equation"><span>k =</span><span class="fraction"><span class="top">T² × M × E</span><span class="bottom">BD² + M × E²</span></span></div>
 <div class="equation" aria-live="polite"><span>k =</span><span class="fraction"><span class="top">(<span class="live" id="show-t">T</span>)² × <span class="live" id="show-m1">100</span> × (<span class="live" id="show-e1">E</span>)</span><span class="bottom">(<span class="live" id="show-bd">BD²</span>) + <span class="live" id="show-m2">100</span> × (<span class="live" id="show-e2">E</span>)²</span></span></div>
-<div class="answer" aria-live="polite"><span class="hint">Reference k (2 significant figures)</span><strong id="answer">—</strong><span class="hint" id="precise">Enter all three values.</span><div class="warning" id="warning"></div></div></section>
+<div class="answer" aria-live="polite"><span class="hint">Answer-line k (2 significant figures)</span><strong id="answer">—</strong><span class="hint" id="precise">Enter all three values.</span><div class="warning" id="warning"></div></div></section>
 </div>
-<details class="panel advanced" id="advanced"><summary>Raw values &amp; alternative calculations (optional)</summary>
-<p class="fine">Enter only the raw measurements available. The selected unit scenario is converted to consistent g, cm and s units for calculation. Results are possibilities to check against candidate working, not automatic marking decisions.</p>
-<div class="unit-controls">
-<div class="unit-control"><strong>Mass units (B and M)</strong><div class="unit-buttons"><button type="button" class="unit-button selected" data-unit-type="mass" data-unit="g">g</button><button type="button" class="unit-button" data-unit-type="mass" data-unit="kg">kg</button></div></div>
-<div class="unit-control"><strong>Length units (D, h and E)</strong><div class="unit-buttons"><button type="button" class="unit-button selected" data-unit-type="length" data-unit="cm">cm</button><button type="button" class="unit-button" data-unit-type="length" data-unit="mm">mm</button><button type="button" class="unit-button" data-unit-type="length" data-unit="m">m</button></div></div>
-</div><p class="fine" id="unit-note">Optional unit scenario: the entered figures are interpreted in the selected units, then converted to g and cm for calculation. BD² is interpreted in the corresponding mass × length² units. Main answer above remains unchanged.</p>
-<div class="advanced-grid">
-<div class="subpanel"><h3>Beaker measurements (shared)</h3><div class="raw-grid">
-<div class="field"><label for="b">B <span class="unit">beaker mass, <span id="b-unit">g</span></span></label><input id="b" type="number" step="10" placeholder="e.g. 150"></div>
-<div class="field"><label for="d">D <span class="unit">diameter, <span id="d-unit">cm</span></span></label><input id="d" type="number" step="0.1" placeholder="e.g. 8.2"></div>
-</div></div>
-<div class="subpanel"><h3>50 g trial (first k)</h3><div class="raw-grid">
-<div class="field"><label for="h50">h <span class="unit">thickness, <span class="h-unit">cm</span></span></label><input id="h50" type="number" step="0.01"></div>
-<div class="field"><label for="time50">Total time <span class="unit">s</span></label><input id="time50" type="number" step="0.1"></div>
-<div class="field"><label for="n50">Oscillations counted <span class="unit">number</span></label><input id="n50" type="number" step="1"></div>
-</div></div>
-<div class="subpanel"><h3>100 g trial (second k)</h3><div class="raw-grid">
-<div class="field"><label for="h100">h <span class="unit">thickness, <span class="h-unit">cm</span></span></label><input id="h100" type="number" step="0.01"></div>
-<div class="field"><label for="time100">Total time <span class="unit">s</span></label><input id="time100" type="number" step="0.1"></div>
-<div class="field"><label for="n100">Oscillations counted <span class="unit">number</span></label><input id="n100" type="number" step="1"></div>
-</div></div>
-<div class="subpanel"><h3>How alternatives are formed</h3><p class="fine">For each trial, use either answer-line or calculated BD² = B × D²; either answer-line E or D + h; and either answer-line T or total time ÷ oscillation count. Only complete, physically valid combinations appear.</p></div>
+<div class="raw-separator"><span>↓ If necessary, check from raw values ↓</span></div>
+<div class="main">
+<section class="panel"><h2>2. Candidate raw data values</h2>
+<p class="fine">Enter the original measurements. The calculator derives BD² = B × D² and E = D + h. T is taken from the answer-line box above, unchanged.</p>
+<div class="raw-fields">
+<div class="field"><label for="b">B<span class="unit">g</span></label><input id="b" type="number" step="1" placeholder="Beaker mass"></div>
+<div class="field"><label for="d">D<span class="unit">cm</span></label><input id="d" type="number" step="0.1" placeholder="Diameter"></div>
+<div class="field"><label for="h">h<span class="unit">cm</span></label><input id="h" type="number" step="0.01" placeholder="Thickness"></div>
+</div><button type="button" class="clear-button" id="clear-raw">Clear raw values</button><p class="fine" style="margin:13px 0 0">B and D are shared by both trials; h is saved separately. All inputs use g, cm and s.</p></section>
+<section class="panel"><h2>Raw-data equation &amp; result</h2>
+<div class="equation"><span>k =</span><span class="fraction"><span class="top">T² × M × (D + h)</span><span class="bottom">B × D² + M × (D + h)²</span></span></div>
+<div class="equation" aria-live="polite"><span>k =</span><span class="fraction"><span class="top">(<span class="live" id="raw-show-t">T</span>)² × <span class="live" id="raw-show-m1">100</span> × (<span class="live" id="raw-show-e1">D + h</span>)</span><span class="bottom">(<span class="live" id="raw-show-bd">B × D²</span>) + <span class="live" id="raw-show-m2">100</span> × (<span class="live" id="raw-show-e2">D + h</span>)²</span></span></div>
+<div class="answer" aria-live="polite"><span class="hint">Raw-data k (2 significant figures)</span><strong id="raw-answer">—</strong><span class="hint" id="raw-precise">Enter B, D, h and T above.</span><div class="warning" id="raw-warning"></div></div>
+<div class="fine" id="comparison" style="margin-top:10px"></div></section>
 </div>
-<div id="trial-results-100"><h2>Possible k values — 100 g trial</h2><div class="options" id="derived100"></div><div class="table-wrap"><table><thead><tr><th>Source combination</th><th>k (2 s.f.)</th><th>Unrounded</th></tr></thead><tbody id="alternatives100"></tbody></table></div></div>
-<div id="trial-results-50"><h2 style="margin-top:22px">Possible k values — 50 g trial</h2><div class="options" id="derived50"></div><div class="table-wrap"><table><thead><tr><th>Source combination</th><th>k (2 s.f.)</th><th>Unrounded</th></tr></thead><tbody id="alternatives50"></tbody></table></div></div>
-<p class="fine" style="margin-top:12px">Exact duplicates and values differing only by powers of ten are grouped. Distinct numerical values remain visible.</p>
-</details>
 <div class="footer">Cambridge International AS &amp; A Level Physics 9702 · Examiner reference aid</div>
 </main>
 <script>
 (()=>{'use strict';
 const $=id=>document.getElementById(id);
-let mass=100, standardForm=true, advancedMassUnit='g', advancedLengthUnit='cm';
-const saved={50:{e:'',t:''},100:{e:'',t:''}};
+let mass=100,standardForm=true;
+const saved={50:{e:'',t:'',h:''},100:{e:'',t:'',h:''}};
 const num=v=>String(v).trim()===''?NaN:Number(v);
 const valid=x=>Number.isFinite(x)&&x>0;
-const text=(id,value)=>{$(id).textContent=value};
 const fmt=x=>Number.isFinite(x)?Number(x.toPrecision(12)).toString():'—';
+const text=(id,value)=>{$(id).textContent=value};
 const calc=(bd,e,t,m)=>t*t*m*e/(bd+m*e*e);
-function updateUnitLabels(){text('b-unit',advancedMassUnit);text('d-unit',advancedLengthUnit);document.querySelectorAll('.h-unit').forEach(el=>el.textContent=advancedLengthUnit);}
 function getBD(){const v=num($('bd').value);return Number.isFinite(v)?v*(standardForm?10**Number($('exponent').value):1):NaN}
+function showResult(prefix,bd,e,t){
+ const id=x=>prefix?`raw-${x}`:x;
+ if(Number.isFinite(bd)&&bd>=0&&valid(e)&&valid(t)){
+  const k=calc(bd,e,t,mass);
+  if(valid(k)){text(id('answer'),k.toPrecision(2));text(id('precise'),'Unrounded: '+k.toPrecision(12));text(id('warning'),'');return k}
+  text(id('answer'),'—');text(id('precise'),'');text(id('warning'),'Calculation outside numerical range.');
+ }else{text(id('answer'),'—');text(id('precise'),prefix?'Enter B, D, h and T above.':'Enter all three values.');text(id('warning'),'')}
+ return NaN;
+}
 function update(){
-const bdText=$('bd').value,eText=$('e').value,tText=$('t').value;
-text('show-bd',bdText?(standardForm?fmt(num(bdText)*10**Number($('exponent').value)):bdText):'BD²');text('show-e1',eText||'E');text('show-e2',eText||'E');text('show-t',tText||'T');text('show-m1',mass);text('show-m2',mass);
-const bd=getBD(),e=num(eText),t=num(tText);
-if(Number.isFinite(bd)&&bd>=0&&valid(e)&&valid(t)){
-const k=calc(bd,e,t,mass);
-if(valid(k)){text('answer',k.toPrecision(2));text('precise','Unrounded: '+k.toPrecision(12));text('warning','')}
-else {text('answer','—');text('precise','');text('warning','Calculation outside numerical range.')}
-}else {text('answer','—');text('precise','Enter all three values.');text('warning',[bd,e,t].some(x=>Number.isFinite(x)&&x<0)?'Measurements cannot be negative.':'')}
-updateAdvanced();
+ const bd=getBD(),e=num($('e').value),t=num($('t').value);
+ text('show-bd',Number.isFinite(bd)?fmt(bd):'BD²');text('show-e1',valid(e)?fmt(e):'E');text('show-e2',valid(e)?fmt(e):'E');text('show-t',valid(t)?fmt(t):'T');text('show-m1',mass);text('show-m2',mass);
+ const answer=showResult('',bd,e,t);
+ const B=num($('b').value),D=num($('d').value),h=num($('h').value);
+ const rawBD=valid(B)&&valid(D)?B*D*D:NaN;
+ const rawE=valid(D)&&Number.isFinite(h)&&h>=0?D+h:NaN;
+ text('raw-show-bd',Number.isFinite(rawBD)?fmt(rawBD):'B × D²');text('raw-show-e1',valid(rawE)?fmt(rawE):'D + h');text('raw-show-e2',valid(rawE)?fmt(rawE):'D + h');text('raw-show-t',valid(t)?fmt(t):'T');text('raw-show-m1',mass);text('raw-show-m2',mass);
+ const raw=showResult('raw',rawBD,rawE,t);
+ text('comparison',valid(answer)&&valid(raw)?(answer.toPrecision(2)===raw.toPrecision(2)?'Both routes agree to 2 significant figures.':'The two routes give different results to 2 significant figures; check candidate working.'):'');
 }
-function switchMass(next){saved[mass].e=$('e').value;saved[mass].t=$('t').value;mass=next;$('e').value=saved[mass].e;$('t').value=saved[mass].t;document.querySelectorAll('[data-mass]').forEach(b=>b.classList.toggle('selected',Number(b.dataset.mass)===mass));update()}
-function updateAdvanced(){
-const mf=advancedMassUnit==='kg'?1000:1, lf=advancedLengthUnit==='m'?100:advancedLengthUnit==='mm'?0.1:1;
-const B=num($('b').value)*mf,D=num($('d').value)*lf;
-const rawBD=valid(B)&&valid(D)?B*D*D:NaN,bd=getBD()*mf*lf*lf;
-for(const m of [100,50]){
- const h=num($('h'+m).value),total=num($('time'+m).value),count=num($('n'+m).value);
- const rawE=valid(D)&&Number.isFinite(h)&&h>=0?D+h*lf:NaN;
- const rawT=valid(total)&&valid(count)&&Number.isInteger(count)?total/count:NaN;
- const e=num(saved[m].e)*lf,t=num(saved[m].t),calculationMass=m*mf;
- const groups=[
- {label:'BD²',items:[['Answer line',bd],['B × D²',rawBD]]},
- {label:'E',items:[['Answer line',e],['D + h',rawE]]},
- {label:'T',items:[['Answer line',t],['Total time ÷ count',rawT]]}
- ];
- const derived=$('derived'+m);derived.replaceChildren();
- for(const g of groups){const div=document.createElement('div');div.className='option';const title=document.createElement('strong');title.textContent=g.label;div.append(title);for(const [name,value] of g.items){const line=document.createElement('small');line.style.display='block';line.textContent=name+': '+(Number.isFinite(value)&&(value>0||g.label==='BD²'&&value===0)?fmt(value):'—');div.append(line)}derived.append(div)}
- const possibilities=[];
- for(const [bs,bv] of groups[0].items)for(const [es,ev] of groups[1].items)for(const [ts,tv] of groups[2].items){if(!Number.isFinite(bv)||bv<0||!valid(ev)||!valid(tv))continue;const k=calc(bv,ev,tv,calculationMass);if(valid(k))possibilities.push({source:`BD²: ${bs}; E: ${es}; T: ${ts}`,k})}
- const unique=[];
- for(const p of possibilities){const mantissa=x=>x/10**Math.floor(Math.log10(x));const old=unique.find(u=>Math.abs(mantissa(u.k)-mantissa(p.k))<=1e-10*Math.max(mantissa(u.k),mantissa(p.k)));if(old)old.entries.push(p);else unique.push({k:p.k,entries:[p]})}
- unique.sort((a,b)=>a.k-b.k);
- const tbody=$('alternatives'+m);tbody.replaceChildren();
- if(!unique.length){const tr=document.createElement('tr'),td=document.createElement('td');td.colSpan=3;td.className='empty';td.textContent='Enter enough values to calculate at least one complete combination.';tr.append(td);tbody.append(tr);continue}
- for(const item of unique){const tr=document.createElement('tr'),a=document.createElement('td'),b=document.createElement('td'),c=document.createElement('td');a.textContent=item.entries.map(x=>x.source).join(' | ');b.textContent=[...new Set(item.entries.map(x=>x.k.toPrecision(2)))].join(' / ');c.textContent=[...new Set(item.entries.map(x=>x.k.toPrecision(12)))].join(' / ');tr.append(a,b,c);tbody.append(tr)}
-}
-}
-['bd','e','t','b','d','h50','h100','time50','time100','n50','n100'].forEach(id=>$(id).addEventListener('input',()=>{if(id==='e'||id==='t')saved[mass][id]=$(id).value;update()}));
+function switchMass(next){saved[mass].e=$('e').value;saved[mass].t=$('t').value;saved[mass].h=$('h').value;mass=next;$('e').value=saved[mass].e;$('t').value=saved[mass].t;$('h').value=saved[mass].h;document.querySelectorAll('[data-mass]').forEach(b=>b.classList.toggle('selected',Number(b.dataset.mass)===mass));update()}
+['bd','e','t','b','d','h'].forEach(id=>$(id).addEventListener('input',()=>{if(['e','t','h'].includes(id))saved[mass][id]=$(id).value;update()}));
 $('exponent').addEventListener('change',update);
 $('bd-toggle').addEventListener('click',()=>{const current=getBD();standardForm=!standardForm;$('power-label').hidden=!standardForm;$('exponent').hidden=!standardForm;$('bd-toggle').textContent=standardForm?'Use ordinary number instead':'Use standard form instead';$('bd').placeholder=standardForm?'1.4':'14000';$('bd').step=standardForm?'0.1':'100';$('bd-entry').classList.toggle('ordinary',!standardForm);if(Number.isFinite(current))$('bd').value=standardForm?fmt(current/10**Number($('exponent').value)):fmt(current);update()});
 $('clear-values').addEventListener('click',()=>{$('bd').value='';for(const m of [50,100]){saved[m].e='';saved[m].t='';}$('e').value='';$('t').value='';update();$('bd').focus()});
+$('clear-raw').addEventListener('click',()=>{$('b').value='';$('d').value='';for(const m of [50,100])saved[m].h='';$('h').value='';update();$('b').focus()});
 document.querySelectorAll('[data-mass]').forEach(b=>b.addEventListener('click',()=>switchMass(Number(b.dataset.mass))));
-document.querySelectorAll('[data-unit-type]').forEach(button=>button.addEventListener('click',()=>{const type=button.dataset.unitType;if(type==='mass')advancedMassUnit=button.dataset.unit;else advancedLengthUnit=button.dataset.unit;document.querySelectorAll('[data-unit-type="'+type+'"]').forEach(b=>b.classList.toggle('selected',b===button));updateUnitLabels();updateAdvanced()}));
-updateUnitLabels();update();
+update();
 })();
 </script>
 </body></html>
