@@ -8,22 +8,25 @@
 .raw-separator{text-align:center;color:#9dc8ff;font-weight:650;padding:16px 0 2px}.raw-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.raw-fields .field label{font-size:.9rem}@media(max-width:600px){.raw-fields{grid-template-columns:1fr 1fr}}
 
 /* Compact paired panels with a horizontal directional cue. */
+.main.linked>.panel h2{font-size:1.05rem;line-height:1.35;min-height:1.5em}
+.shared-t{margin-top:12px;font-size:.95rem;color:#d7e7fa}.shared-t strong{color:#a9d1ff;font-size:1.1rem}
+.main.linked{grid-template-columns:minmax(0,1.12fr) minmax(0,1fr)}
 .main.linked + .main.linked{margin-top:32px}
-.main.linked{column-gap:34px;row-gap:14px}
+.main.linked{column-gap:52px;row-gap:14px}
 .main.linked>.panel:first-child{position:relative}
-.main.linked>.panel:first-child::after{content:"→";position:absolute;left:calc(100% + 7px);top:50%;transform:translateY(-50%);font-size:2.4rem;font-weight:900;color:#9dc8ff;pointer-events:none}
+.main.linked>.panel:first-child::after{content:"→";position:absolute;left:calc(100% + 8px);top:50%;transform:translateY(-50%);font-size:3.25rem;font-weight:900;line-height:1;color:#9dc8ff;pointer-events:none}
 #precise,#raw-precise{display:block;font-size:1.06rem;font-weight:600;color:#c3d7f5;margin-top:6px;overflow-wrap:anywhere}
 .derived{margin-top:14px;padding:10px 12px;border-radius:8px;background:#101d30;color:#d7e7fa;font-size:.93rem}
 .derived strong{font-size:1.13rem;color:#a9d1ff;margin-left:4px}
 .unit-inline{color:#a9b9d0;font-size:.78rem;margin-left:4px}
 .clear-all{display:block;width:100%;max-width:420px;margin:32px auto 0;padding:15px 24px;background:#922d3a;color:white;border:1px solid #d16a76;border-radius:11px;font-size:1.1rem;font-weight:750}
 .clear-all:hover{background:#b43a49}
-@media(max-width:760px){.main.linked{column-gap:14px}.main.linked>.panel:first-child::after{content:"↓";left:50%;top:calc(100% + 3px);transform:translateX(-50%);font-size:1.15rem}.main.linked{row-gap:23px}}
+@media(max-width:760px){.main.linked{grid-template-columns:1fr;column-gap:14px}.main.linked>.panel:first-child::after{content:"↓";left:50%;top:calc(100% + 3px);transform:translateX(-50%);font-size:1.15rem}.main.linked{row-gap:23px}}
 </style>
 </head>
 <body><main class="app">
 <header><h1>9702 Physics - K Calculator Tool for 2(e)</h1></header>
-<div class="modes" style="max-width:500px;margin:15px 0 0"><button type="button" class="mode" data-mass="50">First k · 50 g</button><button type="button" class="mode selected" data-mass="100">Second k · 100 g</button></div>
+<div class="modes" style="max-width:500px;margin:15px 0 0"><button type="button" class="mode" data-mass="50">First k (k₁) · 50 g</button><button type="button" class="mode selected" data-mass="100">Second k (k₂) · 100 g</button></div>
 <div class="main linked">
 <section class="panel"><h2>1. Candidate answer-line values</h2>
 <div class="fields">
@@ -32,8 +35,8 @@
 <div class="field"><label for="t">T<span class="unit">s</span></label><input id="t" type="number" step="0.01" placeholder="T"></div>
 </div><button type="button" class="clear-button" id="clear-values">Clear Values</button></section>
 <section class="panel"><h2>Answer-line equation &amp; result</h2>
-<div class="equation"><span>k =</span><span class="fraction"><span class="top">T² × M × E</span><span class="bottom">BD² + M × E²</span></span></div>
-<div class="equation" aria-live="polite"><span>k =</span><span class="fraction"><span class="top">(<span class="live" id="show-t">T</span>)² × <span class="live" id="show-m1">100</span> × (<span class="live" id="show-e1">E</span>)</span><span class="bottom">(<span class="live" id="show-bd">BD²</span>) + <span class="live" id="show-m2">100</span> × (<span class="live" id="show-e2">E</span>)²</span></span></div>
+<div class="equation"><span class="k-symbol">k₂ =</span><span class="fraction"><span class="top">T² × M × E</span><span class="bottom">BD² + M × E²</span></span></div>
+<div class="equation" aria-live="polite"><span class="k-symbol">k₂ =</span><span class="fraction"><span class="top">(<span class="live" id="show-t">T</span>)² × <span class="live" id="show-m1">100</span> × (<span class="live" id="show-e1">E</span>)</span><span class="bottom">(<span class="live" id="show-bd">BD²</span>) + <span class="live" id="show-m2">100</span> × (<span class="live" id="show-e2">E</span>)²</span></span></div>
 <div class="answer" aria-live="polite"><span class="hint">Answer-line k (2 significant figures)</span><strong id="answer">—</strong><span class="hint" id="precise">Enter all three values.</span><div class="warning" id="warning"></div></div></section>
 </div>
 
@@ -44,11 +47,11 @@
 <div class="field"><label for="b">B<span class="unit">g</span></label><input id="b" type="number" step="1" placeholder="Beaker mass"></div>
 <div class="field"><label for="d">D<span class="unit">cm</span></label><input id="d" type="number" step="0.1" placeholder="Diameter"></div>
 <div class="field"><label for="h">h<span class="unit">cm</span></label><input id="h" type="number" step="0.01" placeholder="Thickness"></div>
-</div><button type="button" class="clear-button" id="clear-raw">Clear Values</button><div class="derived" aria-live="polite">Calculated BD²: <strong id="raw-bd-value">—</strong> <span class="unit-inline">g cm²</span></div></section>
+</div><div class="shared-t" aria-live="polite">T = <strong id="raw-t-value">—</strong> <span class="unit-inline">s (from answer-line values)</span></div><button type="button" class="clear-button" id="clear-raw">Clear Values</button><div class="derived" aria-live="polite">Calculated BD²: <strong id="raw-bd-value">—</strong> <span class="unit-inline">g cm²</span></div></section>
 <section class="panel"><h2>Raw-data equation &amp; result</h2>
-<div class="equation"><span>k =</span><span class="fraction"><span class="top">T² × M × (D + h)</span><span class="bottom">B × D² + M × (D + h)²</span></span></div>
-<div class="equation" aria-live="polite"><span>k =</span><span class="fraction"><span class="top">(<span class="live" id="raw-show-t">T</span>)² × <span class="live" id="raw-show-m1">100</span> × (<span class="live" id="raw-show-e1">D + h</span>)</span><span class="bottom">(<span class="live" id="raw-show-bd">B × D²</span>) + <span class="live" id="raw-show-m2">100</span> × (<span class="live" id="raw-show-e2">D + h</span>)²</span></span></div>
-<div class="answer" aria-live="polite"><span class="hint">Raw-data k (2 significant figures)</span><strong id="raw-answer">—</strong><span class="hint" id="raw-precise">Enter B, D, h and T above.</span><div class="warning" id="raw-warning"></div></div>
+<div class="equation"><span class="k-symbol">k₂ =</span><span class="fraction"><span class="top">T² × M × (D + h)</span><span class="bottom">B × D² + M × (D + h)²</span></span></div>
+<div class="equation" aria-live="polite"><span class="k-symbol">k₂ =</span><span class="fraction"><span class="top">(<span class="live" id="raw-show-t">T</span>)² × <span class="live" id="raw-show-m1">100</span> × (<span class="live" id="raw-show-e1">D + h</span>)</span><span class="bottom">(<span class="live" id="raw-show-bd">B × D²</span>) + <span class="live" id="raw-show-m2">100</span> × (<span class="live" id="raw-show-e2">D + h</span>)²</span></span></div>
+<div class="answer" aria-live="polite"><span class="hint">Raw-data k (2 significant figures)</span><strong id="raw-answer">—</strong><span class="hint" id="raw-precise">Enter B, D and h, plus T in the answer-line section.</span><div class="warning" id="raw-warning"></div></div>
 </section>
 </div>
 <button type="button" class="clear-all" id="clear-all">Clear All Values</button>
@@ -71,17 +74,18 @@ function showResult(prefix,bd,e,t){
   const k=calc(bd,e,t,mass);
   if(valid(k)){text(id('answer'),k.toPrecision(2));text(id('precise'),'Unrounded: '+k.toPrecision(12));text(id('warning'),'');return k}
   text(id('answer'),'—');text(id('precise'),'');text(id('warning'),'Calculation outside numerical range.');
- }else{text(id('answer'),'—');text(id('precise'),prefix?'Enter B, D, h and T above.':'Enter all three values.');text(id('warning'),'')}
+ }else{text(id('answer'),'—');text(id('precise'),prefix?'Enter B, D and h, plus T in the answer-line section.':'Enter all three values.');text(id('warning'),'')}
  return NaN;
 }
 function update(){
+ document.querySelectorAll('.k-symbol').forEach(el=>el.textContent=mass===50?'k₁ =':'k₂ =');
  const bd=getBD(),e=num($('e').value),t=num($('t').value);
  text('show-bd',Number.isFinite(bd)?fmt(bd):'BD²');text('show-e1',valid(e)?fmt(e):'E');text('show-e2',valid(e)?fmt(e):'E');text('show-t',valid(t)?fmt(t):'T');text('show-m1',mass);text('show-m2',mass);
  showResult('',bd,e,t);
  const B=num($('b').value),D=num($('d').value),h=num($('h').value);
  const rawBD=valid(B)&&valid(D)?B*D*D:NaN;
  const rawE=valid(D)&&Number.isFinite(h)&&h>=0?D+h:NaN;
- text('raw-bd-value',Number.isFinite(rawBD)?fmt(rawBD):'—');
+ text('raw-bd-value',Number.isFinite(rawBD)?fmt(rawBD):'—');text('raw-t-value',valid(t)?fmt(t):'—');
  text('raw-show-bd',valid(B)&&valid(D)?`(${fmt(B)}) × (${fmt(D)})²`:'B × D²');const rawESub=valid(D)&&Number.isFinite(h)&&h>=0?`(${fmt(D)} + ${fmt(h)})`:'D + h';text('raw-show-e1',rawESub);text('raw-show-e2',rawESub);text('raw-show-t',valid(t)?fmt(t):'T');text('raw-show-m1',mass);text('raw-show-m2',mass);
  showResult('raw',rawBD,rawE,t);
 
