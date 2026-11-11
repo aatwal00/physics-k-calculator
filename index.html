@@ -8,13 +8,16 @@
 .raw-separator{text-align:center;color:#9dc8ff;font-weight:650;padding:16px 0 2px}.raw-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.raw-fields .field label{font-size:.9rem}@media(max-width:600px){.raw-fields{grid-template-columns:1fr 1fr}}
 
 /* Compact paired panels with a horizontal directional cue. */
+.main.linked + .main.linked{margin-top:32px}
 .main.linked{column-gap:34px;row-gap:14px}
 .main.linked>.panel:first-child{position:relative}
-.main.linked>.panel:first-child::after{content:"→";position:absolute;left:calc(100% + 7px);top:50%;transform:translateY(-50%);font-size:1.7rem;font-weight:750;color:#9dc8ff;pointer-events:none}
+.main.linked>.panel:first-child::after{content:"→";position:absolute;left:calc(100% + 7px);top:50%;transform:translateY(-50%);font-size:2.4rem;font-weight:900;color:#9dc8ff;pointer-events:none}
 #precise,#raw-precise{display:block;font-size:1.06rem;font-weight:600;color:#c3d7f5;margin-top:6px;overflow-wrap:anywhere}
 .derived{margin-top:14px;padding:10px 12px;border-radius:8px;background:#101d30;color:#d7e7fa;font-size:.93rem}
 .derived strong{font-size:1.13rem;color:#a9d1ff;margin-left:4px}
 .unit-inline{color:#a9b9d0;font-size:.78rem;margin-left:4px}
+.clear-all{display:block;width:100%;max-width:420px;margin:32px auto 0;padding:15px 24px;background:#922d3a;color:white;border:1px solid #d16a76;border-radius:11px;font-size:1.1rem;font-weight:750}
+.clear-all:hover{background:#b43a49}
 @media(max-width:760px){.main.linked{column-gap:14px}.main.linked>.panel:first-child::after{content:"↓";left:50%;top:calc(100% + 3px);transform:translateX(-50%);font-size:1.15rem}.main.linked{row-gap:23px}}
 </style>
 </head>
@@ -48,6 +51,7 @@
 <div class="answer" aria-live="polite"><span class="hint">Raw-data k (2 significant figures)</span><strong id="raw-answer">—</strong><span class="hint" id="raw-precise">Enter B, D, h and T above.</span><div class="warning" id="raw-warning"></div></div>
 </section>
 </div>
+<button type="button" class="clear-all" id="clear-all">Clear All Values</button>
 <div class="footer">Cambridge International AS &amp; A Level Physics 9702 · K Calculator Tool</div>
 </main>
 <script>
@@ -88,6 +92,7 @@ $('exponent').addEventListener('change',update);
 $('bd-toggle').addEventListener('click',()=>{const current=getBD();standardForm=!standardForm;$('power-label').hidden=!standardForm;$('exponent').hidden=!standardForm;$('bd-toggle').textContent=standardForm?'Use ordinary number instead':'Use standard form instead';$('bd').placeholder=standardForm?'1.4':'14000';$('bd').step=standardForm?'0.1':'100';$('bd-entry').classList.toggle('ordinary',!standardForm);if(Number.isFinite(current))$('bd').value=standardForm?fmt(current/10**Number($('exponent').value)):fmt(current);update()});
 $('clear-values').addEventListener('click',()=>{$('bd').value='';for(const m of [50,100]){saved[m].e='';saved[m].t='';}$('e').value='';$('t').value='';update();$('bd').focus()});
 $('clear-raw').addEventListener('click',()=>{$('b').value='';$('d').value='';for(const m of [50,100])saved[m].h='';$('h').value='';update();$('b').focus()});
+$('clear-all').addEventListener('click',()=>{for(const id of ['bd','e','t','b','d','h'])$(id).value='';for(const m of [50,100]){saved[m].e='';saved[m].t='';saved[m].h='';}update();$('bd').focus()});
 document.querySelectorAll('[data-mass]').forEach(b=>b.addEventListener('click',()=>switchMass(Number(b.dataset.mass))));
 update();
 })();
